@@ -253,6 +253,21 @@ public class HomeBean implements Serializable {
         this.uploadedFile = uploadedFile;
     }
 
+    private String resolveStoragePath() {
+        String envPath = System.getenv("FILE_STORAGE_PATH");
+        String path = (envPath != null && !envPath.trim().isEmpty())
+                ? envPath.trim()
+                : System.getProperty("pideadomicilio.file.path", "/opt/filespad");
+        if (!path.endsWith("/")) {
+            path += "/";
+        }
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        return path;
+    }
+
     public void handleFileUpload(FileUploadEvent event) throws IOException {
         log.info("Succesful", event.getFile().getFileName() + " is uploaded.");
 
@@ -261,7 +276,7 @@ public class HomeBean implements Serializable {
         filename = event.getFile().getFileName();
 
 
-        String pathToSave = "/opt/filespad/";
+        String pathToSave = resolveStoragePath();
         //pathToSave = "/tmp/";
 
 
@@ -305,7 +320,7 @@ public class HomeBean implements Serializable {
         filename = event.getFile().getFileName();
 
 
-        String pathToSave = "/opt/filespad/";
+        String pathToSave = resolveStoragePath();
 
         //String fname = "temp" + "."+ filename.split("\\.")[1];
         String fname = URLParamEncoder.encode(filename);

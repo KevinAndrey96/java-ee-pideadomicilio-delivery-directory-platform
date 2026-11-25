@@ -11,22 +11,14 @@
         <class>com.infinitec.pideadomicilio.model.entity.Evento</class>
         <class>com.infinitec.pideadomicilio.model.entity.User</class>
 
-
-
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.transaction.jta.platform"
                       value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
             <property name="hibernate.ogm.datastore.database" value="pedidosadomicilio"/>
-            <property name="hibernate.ogm.datastore.host" value="localhost"/>
+            <property name="hibernate.ogm.datastore.host" value="${env.MONGO_HOST:localhost}"/>
             <property name="hibernate.ogm.datastore.create_database" value="true"/>
-
             <property name="hibernate.ogm.datastore.provider" value="MONGODB"/>
-            <!--
-            <property name="hibernate.ogm.datastore.username" value="pedidosadomicilio"/>
-            <property name="hibernate.ogm.datastore.password" value="pedidosadomicilio"/>
-            -->
-
         </properties>
     </persistence-unit>
 </persistence>

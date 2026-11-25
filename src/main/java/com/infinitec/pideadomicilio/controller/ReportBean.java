@@ -58,12 +58,26 @@ public class ReportBean implements Serializable {
     List<ResumenBusqueda> resumenZonas = new ArrayList<>();
 
 
+    private MongoClient createMongoClient() throws UnknownHostException {
+        String mongoHost = System.getenv("MONGO_HOST") != null && !System.getenv("MONGO_HOST").trim().isEmpty()
+                ? System.getenv("MONGO_HOST").trim()
+                : System.getProperty("mongo.host", "localhost");
+        int mongoPort = 27017;
+        String envPort = System.getenv("MONGO_PORT");
+        if (envPort != null && !envPort.trim().isEmpty()) {
+            try {
+                mongoPort = Integer.parseInt(envPort.trim());
+            } catch (NumberFormatException ignored) {}
+        }
+        return new MongoClient(mongoHost, mongoPort);
+    }
+
     public void reportComercio() throws UnknownHostException {
 
 
         resumen.clear();
         // Since 2.10.0, uses MongoClient
-        MongoClient mongo = new MongoClient("localhost", 27017);
+        MongoClient mongo = createMongoClient();
 
 
         DB db = mongo.getDB("pedidosadomicilio");
@@ -176,7 +190,7 @@ public class ReportBean implements Serializable {
 
         resumenCategorias.clear();
         // Since 2.10.0, uses MongoClient
-        MongoClient mongo = new MongoClient("localhost", 27017);
+        MongoClient mongo = createMongoClient();
 
 
         DB db = mongo.getDB("pedidosadomicilio");
@@ -267,7 +281,7 @@ public class ReportBean implements Serializable {
 
         resumenZonas.clear();
         // Since 2.10.0, uses MongoClient
-        MongoClient mongo = new MongoClient("localhost", 27017);
+        MongoClient mongo = createMongoClient();
 
 
         DB db = mongo.getDB("pedidosadomicilio");

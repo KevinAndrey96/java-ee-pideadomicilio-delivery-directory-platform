@@ -25,15 +25,16 @@ public class FileServlet extends HttpServlet {
     // Actions ------------------------------------------------------------------------------------
 
     public void init() throws ServletException {
-
-        // Define base path somehow. You can define it as init-param of the servlet.
-        this.filePath = "/opt/filespad";
-        //this.filePath = "/tmp";
-
-
-        // In a Windows environment with the Applicationserver running on the
-        // c: volume, the above path is exactly the same as "c:\files".
-        // In UNIX, it is just straightforward "/files".
+        String envPath = System.getenv("FILE_STORAGE_PATH");
+        if (envPath != null && !envPath.trim().isEmpty()) {
+            this.filePath = envPath.trim();
+        } else {
+            this.filePath = System.getProperty("pideadomicilio.file.path", "/opt/filespad");
+        }
+        File baseDir = new File(this.filePath);
+        if (!baseDir.exists()) {
+            baseDir.mkdirs();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

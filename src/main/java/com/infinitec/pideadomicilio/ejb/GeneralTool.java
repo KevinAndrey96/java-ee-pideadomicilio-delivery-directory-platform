@@ -47,10 +47,11 @@ public class GeneralTool implements Serializable {
 
 
     public String encrypt(String password) {
-        String key = "Inf12345Inf12345"; // 128 bit key
-        String initVector = "RandomInftVector"; // 16 bytes IV
-        String encryptedStr = Encryptor.encrypt(key, initVector, password);
-        return encryptedStr;
+        String envKey = System.getenv("AES_SECRET_KEY");
+        String key = (envKey != null && envKey.length() == 16) ? envKey : "Inf12345Inf12345";
+        String envIv = System.getenv("AES_INIT_VECTOR");
+        String initVector = (envIv != null && envIv.length() == 16) ? envIv : "RandomInftVector";
+        return Encryptor.encrypt(key, initVector, password);
     }
 
 
