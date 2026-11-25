@@ -27,7 +27,7 @@ public class ModelEntityTest {
         Assert.assertEquals("Usaquen_Bogota", usaquen.getId());
         Assert.assertEquals("Usaquén", usaquen.getNombre());
         Assert.assertEquals(bogota, usaquen.getCiudad());
-        Assert.assertEquals("Usaquén (Bogotá D.C.)", usaquen.getNombreZona());
+        Assert.assertEquals("Usaquén", usaquen.getNombreZona());
     }
 
     @Test
