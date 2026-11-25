@@ -95,18 +95,24 @@ public class ModelEntityTest {
         banner.setId("banner-01");
         banner.setNombre("Promo Viernes");
         banner.setImg("/file/banner1.jpg");
-        banner.setTipo("PORTADA");
+        banner.setImgResp("/file/banner1_mobile.jpg");
+        banner.setPeso(5);
+
         Assert.assertEquals("Promo Viernes", banner.getNombre());
         Assert.assertEquals("/file/banner1.jpg", banner.getImg());
+        Assert.assertEquals("/file/banner1_mobile.jpg", banner.getImgResp());
+        Assert.assertEquals(5, banner.getPeso());
     }
 
     @Test
     public void testResumenBusquedaPojo() {
         ResumenBusqueda rb = new ResumenBusqueda();
-        rb.setNombre("Pizza");
-        rb.setCantidad(42);
+        rb.setBusqueda("Pizza");
+        rb.setTipo("CATEGORIA");
+        rb.setCantidad(42.0f);
 
-        Assert.assertEquals("Pizza", rb.getNombre());
-        Assert.assertEquals(Integer.valueOf(42), rb.getCantidad());
+        Assert.assertEquals("Pizza", rb.getBusqueda());
+        Assert.assertEquals("CATEGORIA", rb.getTipo());
+        Assert.assertEquals(42.0f, rb.getCantidad(), 0.001f);
     }
 }
